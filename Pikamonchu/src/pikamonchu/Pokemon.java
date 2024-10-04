@@ -1,108 +1,95 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package pikamonchu;
+package pokemonplay;
+
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
-
-/**
- *
- * @author selvi
- */
-public class Pokemon {
-    //ejemplo de atributos para inventario y jugador
-    protected String nombre;
-    protected int vida;
-    protected ArrayList<Ataque> ataques;
+public abstract class Pokemon {
+    
+    protected  String nombre;
+    protected String tipo;
     protected int defensa;
-    protected int maxV;
-    protected double altura;
+    protected int velocidad;
+    protected int fuerza;
+    protected int vida;
+    protected int ataque;
+    protected Ataque ataquePrincipal;
+    protected ArrayList<Ataque> ataques;
+
     
-    
-    public Pokemon(String nombre, int vida, int defensa, double altura){
+    public Pokemon(String nombre,String tipo, int defensa, int velocidad, int fuerza) {
         this.nombre = nombre;
-        this.vida = vida;
-        this.defensa = defensa;
-        this.altura=altura;
-        this.maxV = vida;
-        this.ataques = new ArrayList<>();
+        this.tipo= tipo;
+        this.defensa=defensa;
+        this.velocidad=velocidad;
+        this.vida=100;
     }
-    
+
     public String getNombre() {
         return nombre;
-    }
-
-    public int getVida() {
-        return vida;
-    }
-
-    public ArrayList<Ataque> getAtaques() {
-        return ataques;
-    }
-
-    public int getDefensa() {
-        return defensa;
-    }
-    public int getMaxVida(){
-        return maxV;
-    }
-
-    public double getAltura() {
-        return altura;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public void setVida(int vida) {
-        this.vida = vida;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setAtaques(ArrayList<Ataque> ataques) {
-        this.ataques = ataques;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public int getDefensa() {
+        return defensa;
     }
 
     public void setDefensa(int defensa) {
         this.defensa = defensa;
     }
 
-    public void setAltura(double altura) {
-        this.altura = altura;
+    public int getVelocidad() {
+        return velocidad;
+    }
+
+    public void setVelocidad(int velocidad) {
+        this.velocidad = velocidad;
+    }
+
+    public int getVida() {
+        return vida;
+    }
+
+    public void setVida(int vida) {
+        this.vida = vida;
+    }
+
+    public ArrayList<Ataque> getAtaques() {
+        return ataques;
+    }
+
+    public void setAtaques(ArrayList<Ataque> ataques) {
+        this.ataques = ataques;
+    }
+ 
+   
+    public abstract  void atacar(Pokemon oponente);
+    public  boolean estavivo(){
+        return vida > 0;
     }
     
-    public void setMaxV(int maxV){
-        this.maxV=maxV;
-    }
-    
-    
-    public void agregarA(Ataque ataque){
-        if(ataques.size() < 7){
-            ataques.add(ataque);
-            System.out.println("se agrego el ataque "+ataque.getNombreA()+" con daño de "+ataque.getDaño());
-        }else{
-            System.out.println("los espacios de los ataques estan llenos");
+    public void recibirdanio(int danio){
+        int danioRecibido = danio - this.defensa;
+        if (danioRecibido > 0) {
+            this.vida -= danioRecibido;
         }
+        if (this.vida < 0) this.vida = 0;
+        System.out.println(this.nombre + " recibió " + danioRecibido + " de daño. Vida restante: " + this.vida);
     }
-    
-    public void curar(Pokemon pokemon, Consumible con){
-        if(pokemon.vida > 0){
-            pokemon.vida += con.getValor();
-            if(pokemon.vida > pokemon.maxV){
-                int dif = pokemon.vida - pokemon.maxV;
-                pokemon.vida -= dif;
-            }
-        }else{
-            System.out.println("su pokemon ya a sido derrotado");
-        }
-        
+
+    @Override
+    public String toString() {
+        return "Pokemon{" + "nombre=" + nombre + ", tipo=" + tipo + ", defensa=" + defensa + ", velocidad=" + velocidad + ", vida=" + vida + '}';
     }
-    
-    
-    
-    
-    
+
+      
 }
